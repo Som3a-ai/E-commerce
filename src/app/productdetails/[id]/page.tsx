@@ -95,7 +95,7 @@ export default async function page(props: { params: Promise<{ id: string }> }) {
               <h1 className="text-2xl lg:text-3xl font-bold text-gray-900 mb-3">{myProduct?.title}</h1>
               <div className="flex items-center gap-3 mb-4">
                       <div className="text-yellow-400">
-                        <RatingStars rating={myProduct?.ratingsAverage}/>
+                        <RatingStars rating={myProduct?.ratingsAverage ?? 0}/>
                       </div>
                       <span className="text-sm text-gray-600">
                           {myProduct?.ratingsAverage} {" "}
