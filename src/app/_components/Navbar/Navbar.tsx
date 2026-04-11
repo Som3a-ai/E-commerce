@@ -104,4 +104,3 @@ export default function Navbar() {
     </header>
   )
 }
-{/* <svg data-prefix="fas" data-icon="chevron-down" class="svg-inline--fa fa-chevron-down text-[10px] transition-transform group-hover:rotate-180" role="img" viewBox="0 0 448 512" aria-hidden="true"></svg> */}
