@@ -16,7 +16,7 @@ export default async function FeaturedProducts() {
 
   const allProducts = await getAllProducts();
 
-console.log(allProducts)
+
 
   return (
     <>

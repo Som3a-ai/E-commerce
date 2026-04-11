@@ -1,7 +1,7 @@
 export interface ProductType {
   sold: number;
   images: string[];
-  subcategory: [[object]];
+  subcategory: SubCategory[] ;
   ratingsQuantity: number;
   _id: string;
   title: string;
@@ -30,4 +30,11 @@ interface BrandType {
   name: string;
   slug: string;
   image: string;
+}
+
+interface SubCategory{
+  _id : string;
+  name : string;
+  slug : string;
+  category : string
 }

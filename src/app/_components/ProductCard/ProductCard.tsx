@@ -7,6 +7,7 @@ import { FaRegEye } from "react-icons/fa6";
 import { FaStar } from "react-icons/fa6";
 import { FiPlus } from "react-icons/fi";
 import { ProductType } from "../../../api/types/product.type";
+import RatingStars from "../RatingStars/RatingStars";
 
 export default function ProductCard({ product }: { product: ProductType }) {
   return (
@@ -26,7 +27,7 @@ export default function ProductCard({ product }: { product: ProductType }) {
           </button>
           <Link
             className="bg-white h-8 w-8 rounded-full flex items-center justify-center text-gray-600 hover:text-green-600 shadow-sm"
-            href="/products"
+            href={`/productdetails/${product.id}`}
           >
             <FaRegEye />
           </Link>
@@ -51,19 +52,13 @@ export default function ProductCard({ product }: { product: ProductType }) {
           {product.category.name}
         </div>
         <h3 className="font-medium mb-1 cursor-pointer ">
-          <Link className="line-clamp-2" href="/products/">
+          <Link className="line-clamp-2" href={`/productdetails/${product.id}`}>
             {product.title}
           </Link>
         </h3>
         <div className="flex items-center mb-2">
-          <div className=" text-amber-400 mr-2">
-            <div className="text-yellow-400 flex">
-              <FaStar />
-              <FaStar />
-              <FaStar />
-              <FaStar />
-              <FaStar />
-            </div>
+          <div className="mr-2">
+            <RatingStars rating={product.ratingsAverage} />
           </div>
           <span className="text-xs text-gray-500">
             {product.ratingsAverage} {`(${product.ratingsQuantity})`}
@@ -74,7 +69,10 @@ export default function ProductCard({ product }: { product: ProductType }) {
             <span
               className={`text-lg font-bold ${product.priceAfterDiscount ? "text-green-600" : "text-gray-800"}`}
             >
-              {product.priceAfterDiscount ? product.priceAfterDiscount : product.price} EGP
+              {product.priceAfterDiscount
+                ? product.priceAfterDiscount
+                : product.price}{" "}
+              EGP
             </span>
             {product.priceAfterDiscount && (
               <span className="text-sm text-gray-500 line-through ml-2">
