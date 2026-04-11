@@ -98,7 +98,7 @@ export default async function page(props: { params: Promise<{ id: string }> }) {
                         <RatingStars rating={myProduct?.ratingsAverage ?? 0}/>
                       </div>
                       <span className="text-sm text-gray-600">
-                          {myProduct?.ratingsAverage} {" "}
+                          {myProduct?.ratingsAverage ?? 0} {" "}
                           {`(${myProduct?.ratingsQuantity} reviews)`}
                       </span>
               </div>
