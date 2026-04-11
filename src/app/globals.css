@@ -128,3 +128,14 @@
     @apply font-sans;
   }
 }
+
+.product-card{
+  transition: all 0.3s ease;
+}
+
+.product-card:hover{
+
+  transform: translateY(-5px);
+  box-shadow:rgba(0,0,0,0.1) 0 10px 15px -3px ;
+
+}

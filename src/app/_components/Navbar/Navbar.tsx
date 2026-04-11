@@ -1,3 +1,6 @@
+"use client"
+
+
 import Link from 'next/link'
 import Image from "next/image";
 import { FaMagnifyingGlass } from "react-icons/fa6";
@@ -6,6 +9,14 @@ import { FaHeadset } from "react-icons/fa";
 import { CiHeart } from "react-icons/ci";
 import { FaShoppingCart } from "react-icons/fa";
 import { CiUser } from "react-icons/ci";
+import { FaTruck } from "react-icons/fa";
+import { FaGift } from "react-icons/fa";
+import { IoIosCall } from "react-icons/io";
+import { FaRegEnvelope } from "react-icons/fa";
+import { IoIosPersonAdd } from "react-icons/io";
+
+
+
 
 
 
@@ -21,7 +32,55 @@ import { SheetDemo } from './../Sheet/Sheet';
 
 export default function Navbar() {
   return (
-    <header className="sticky top-0 z-40 bg-white shadow-sm">
+
+    <>
+  {/* // Above Navbar visible in desktop screens */}
+    <div className="hidden lg:block text-sm border-b border-gray-100">
+          <div className="container mx-auto px-4">
+                  <div className="flex justify-between items-center h-10">
+                          <div className="flex items-center gap-6 text-gray-500">
+                            <span className="flex items-center gap-2">
+                                <FaTruck className='text-green-500' />
+                                <span>Free Shipping on Orders 500 EGP</span>
+                            </span>
+                            <span className="flex items-center gap-2">
+                                              <FaGift className='text-green-500' />
+                                          <span>New Arrivals Daily</span>
+                            </span>
+                          </div>
+                          <div className="flex items-center gap-6">
+                                <div className="flex items-center gap-4 text-gray-500">
+                                      <a href="tel:+18001234567" className="flex items-center gap-1.5 hover:text-green-600 transition-colors">
+                                            <IoIosCall />
+                                            <span>+1 (800) 123-4567</span>
+
+
+                                      </a>
+                                      <a href="mailto:support@freshcart.com" className="flex items-center gap-1.5 hover:text-green-600 transition-colors">
+                                              <FaRegEnvelope />
+                                           <span>support@freshcart.com</span>
+                                      </a>
+                                </div>
+                                  
+                                  <span className="w-px h-4 bg-gray-200"></span>
+
+                                  <div className="flex items-center gap-4">
+                                      <Link className="flex items-center gap-1.5 text-gray-600 hover:text-green-600 transition-colors" href="/login">
+                                            <CiUser />
+                                            <span>Sign In</span>
+                                      </Link>
+                                      <Link className="flex items-center gap-1.5 text-gray-600 hover:text-green-600 transition-colors" href="/register">
+                                            <IoIosPersonAdd />
+
+                                            <span>Sign Up</span>
+                                      </Link>
+                                  </div>
+                          </div>
+                  </div>
+          </div>
+    </div>
+    
+     <header className="sticky top-0 z-40 bg-white shadow-sm">
           <div className="bg-white">
             <div className="container mx-auto px-4">
                 <div className="flex items-center justify-between h-16 lg:h-18 gap-4 lg:gap-8">
@@ -102,5 +161,8 @@ export default function Navbar() {
             </div>
           </div>
     </header>
+    </>
+
+   
   )
 }

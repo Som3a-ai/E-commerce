@@ -1,3 +1,5 @@
+"use client";
+
 import { Button } from "@/components/ui/button";
 import freshCartIcon from "../../../../public/FreshCart Logo.png";
 import { FaMagnifyingGlass } from "react-icons/fa6";
@@ -22,10 +24,8 @@ import { FaHeadset } from "react-icons/fa";
 export function SheetDemo() {
   return (
     <Sheet>
-      <SheetTrigger asChild>
-        <button className="lg:hidden ml-1 w-10 h-10 rounded-full bg-green-600 hover:bg-green-700 text-white flex items-center justify-center transition-colors cursor-pointer">
-          <FaBars className="text-white " />
-        </button>
+      <SheetTrigger className="lg:hidden ml-1 cursor-pointer w-10 h-10 rounded-full bg-green-600 hover:bg-green-700 text-white flex items-center justify-center transition-colors">
+        <FaBars />
       </SheetTrigger>
 
       <SheetContent>
@@ -35,7 +35,7 @@ export function SheetDemo() {
           </SheetTitle>
           <SheetDescription>
             <form className="p-4 border-b border-gray-100">
-              <div class="relative">
+              <div className="relative">
                 <input
                   type="text"
                   placeholder="Search products..."
@@ -79,42 +79,42 @@ export function SheetDemo() {
             </Link>
           </div>
         </nav>
-        <div class="mx-4 border-t border-gray-100"></div>
-        <div class="p-4 space-y-1">
+        <div className="mx-4 border-t border-gray-100"></div>
+        <div className="p-4 space-y-1">
           <Link
-            class="flex items-center justify-between px-4 py-3 rounded-xl hover:bg-green-50 transition-colors"
+            className="flex items-center justify-between px-4 py-3 rounded-xl hover:bg-green-50 transition-colors"
             href="/wishlist"
           >
-            <div class="flex items-center gap-3">
-              <div class="w-9 h-9 rounded-full bg-red-50 flex items-center justify-center text-red-500">
+            <div className="flex items-center gap-3">
+              <div className="w-9 h-9 rounded-full bg-red-50 flex items-center justify-center text-red-500">
                 <CiHeart />
               </div>
-              <span class="font-medium text-gray-700">Wishlist</span>
+              <span className="font-medium text-gray-700">Wishlist</span>
             </div>
           </Link>
           <Link
-            class="flex items-center justify-between px-4 py-3 rounded-xl hover:bg-green-50 transition-colors"
+            className="flex items-center justify-between px-4 py-3 rounded-xl hover:bg-green-50 transition-colors"
             href="/cart"
           >
-            <div class="flex items-center gap-3">
-              <div class="w-9 h-9 rounded-full bg-green-50 flex items-center justify-center text-green-500">
+            <div className="flex items-center gap-3">
+              <div className="w-9 h-9 rounded-full bg-green-50 flex items-center justify-center text-green-500">
                 <FaShoppingCart />
               </div>
-              <span class="font-medium text-gray-700">Cart</span>
+              <span className="font-medium text-gray-700">Cart</span>
             </div>
           </Link>
         </div>
-        <div class="mx-4 border-t border-gray-100"></div>
-        <div class="p-4 space-y-1">
-          <div class="grid grid-cols-2 gap-3 pt-2">
+        <div className="mx-4 border-t border-gray-100"></div>
+        <div className="p-4 space-y-1">
+          <div className="grid grid-cols-2 gap-3 pt-2">
             <Link
-              class="flex items-center justify-center gap-2 px-4 py-3 rounded-xl bg-green-600 text-white font-semibold hover:bg-green-700 transition-colors"
+              className="flex items-center justify-center gap-2 px-4 py-3 rounded-xl bg-green-600 text-white font-semibold hover:bg-green-700 transition-colors"
               href="/login"
             >
               Sign In
             </Link>
             <Link
-              class="flex items-center justify-center gap-2 px-4 py-3 rounded-xl border-2 border-green-600 text-primary-600 font-semibold hover:bg-green-50 transition-colors"
+              className="flex items-center justify-center gap-2 px-4 py-3 rounded-xl border-2 border-green-600 text-primary-600 font-semibold hover:bg-green-50 transition-colors"
               href="/register"
             >
               Sign Up
@@ -123,15 +123,17 @@ export function SheetDemo() {
         </div>
 
         <Link
-          class="mx-4 mt-2 p-4 rounded-xl bg-gray-50 border border-gray-100 flex items-center gap-3 hover:bg-green-50 transition-colors"
+          className="mx-4 mt-2 p-4 rounded-xl bg-gray-50 border border-gray-100 flex items-center gap-3 hover:bg-green-50 transition-colors"
           href="/contact"
         >
-          <div class="w-10 h-10 rounded-full bg-green-100 flex items-center text-green-500 justify-center">
+          <div className="w-10 h-10 rounded-full bg-green-100 flex items-center text-green-500 justify-center">
             <FaHeadset />
           </div>
           <div>
-            <div class="text-sm font-semibold text-gray-700">Need Help?</div>
-            <div class="text-sm text-primary-600">Contact Support</div>
+            <div className="text-sm font-semibold text-gray-700">
+              Need Help?
+            </div>
+            <div className="text-sm text-primary-600">Contact Support</div>
           </div>
         </Link>
       </SheetContent>
