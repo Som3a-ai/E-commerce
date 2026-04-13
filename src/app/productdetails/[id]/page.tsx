@@ -6,26 +6,17 @@ import { FaChevronRight } from "react-icons/fa";
 import ProductImages from "./../../_components/ProductImages/ProductImages";
 import RatingStars from "@/app/_components/RatingStars/RatingStars";
 import AddBtn from "@/app/_components/AddBtn/AddBtn";
+import { getSingleProduct } from "@/api/services/routemisr.service";
+import PriceIndicator from "@/app/_components/PriceIndicator/PriceIndicator";
+import { getDiscountedPercentage } from "@/utils";
 
 export default async function page(props: { params: Promise<{ id: string }> }) {
   const params = await props.params;
 
   const id = params.id;
 
-  async function getSingleProduct(): Promise<ProductType | null> {
-    try {
-      const res = await fetch(
-        `https://ecommerce.routemisr.com/api/v1/products/${id}`,
-      );
-      const data = await res.json();
 
-      return data.data;
-    } catch (err) {
-      return null;
-    }
-  }
-
-  const myProduct = await getSingleProduct();
+  const myProduct = await getSingleProduct(id);
 
   const allImages =
     myProduct?.images.map((img) => ({
@@ -105,8 +96,20 @@ export default async function page(props: { params: Promise<{ id: string }> }) {
 
               <div className="flex items-center flex-wrap gap-3 mb-6">
                 <span className="text-3xl font-bold text-gray-900">
-                      {myProduct?.price} {" "}EGP
+                      {myProduct?.priceAfterDiscount ? myProduct?.priceAfterDiscount : myProduct?.price} {" "}EGP
                 </span>
+                {myProduct?.priceAfterDiscount && <>
+                
+                    <span className="text-lg text-gray-400 line-through">
+                      {myProduct.price}
+                    </span>
+
+                    <span className="bg-red-500 text-white text-sm px-3 py-1 rounded-full font-medium">
+
+                      Save {getDiscountedPercentage(myProduct.price , myProduct?.priceAfterDiscount)}%
+                    </span>
+                
+                </>}
                 
                 </div>
 
@@ -121,30 +124,8 @@ export default async function page(props: { params: Promise<{ id: string }> }) {
                           <p className="text-gray-600 leading-relaxed">{myProduct?.description}</p>
                 </div>
 
-                <div className="mb-6">
-                    <label className="block text-sm font-medium text-gray-700 mb-2">Quantity</label>
-                    <div className="flex items-center gap-4">
-                        <div className="flex items-center border-2 border-gray-200 rounded-lg overflow-hidden">
-                                  <AddBtn productQuantity={myProduct?.quantity || 0}/>  
-                        </div>
-
-                        <span className="text-sm text-gray-500">
-                          {myProduct?.quantity}{" "} available
-                        </span>
-                    </div>
-
-
-                </div>
-
-
-                <div className="bg-gray-50 rounded-lg p-4 mb-6">
-                          <div className="flex justify-between items-center">
-                                  <span className="text-gray-600">Total Price:</span>
-                                  <span className="text-2xl font-bold text-green-600">
-                                          
-                                  </span>
-                          </div>
-                </div>
+            {/* btn and total price below here */}
+            <PriceIndicator quantity={myProduct?.quantity || 0} price={myProduct?.price || 0} discountedPrice={myProduct?.priceAfterDiscount || 0}/>
           </div>
           
           </div>

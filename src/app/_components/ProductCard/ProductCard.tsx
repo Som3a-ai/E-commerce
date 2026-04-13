@@ -8,6 +8,7 @@ import { FaStar } from "react-icons/fa6";
 import { FiPlus } from "react-icons/fi";
 import { ProductType } from "../../../api/types/product.type";
 import RatingStars from "../RatingStars/RatingStars";
+import { getDiscountedPercentage } from "@/utils";
 
 export default function ProductCard({ product }: { product: ProductType }) {
   return (
@@ -37,10 +38,9 @@ export default function ProductCard({ product }: { product: ProductType }) {
           <div className="absolute top-3 left-3">
             <span className="bg-red-500 text-white text-xs px-2 py-1 rounded">
               -{" "}
-              {Math.round(
-                ((product.price - product.priceAfterDiscount) / product.price) *
-                  100,
-              )}
+              {
+                getDiscountedPercentage(product.price , product.priceAfterDiscount)
+              }
               %
             </span>
           </div>
