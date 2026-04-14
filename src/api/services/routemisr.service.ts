@@ -1,9 +1,11 @@
-import { ProductType } from "../types/product.type";
+import { CategoryType, ProductType } from "../types/product.type";
 
 export async function getAllProducts(): Promise<ProductType[] | null> {
     try {
       const res = await fetch(
-        `https://ecommerce.routemisr.com/api/v1/products`,
+        `https://ecommerce.routemisr.com/api/v1/products`, {
+          cache : "force-cache"
+        }
       );
       const data = await res.json();
 
@@ -24,6 +26,22 @@ export async function getAllProducts(): Promise<ProductType[] | null> {
 
       return data.data;
     } catch (err) {
+      return null;
+    }
+  }
+
+
+
+ export  async function getAllCategories(): Promise<CategoryType[] | null> {
+    try {
+      const res = await fetch(
+        `https://ecommerce.routemisr.com/api/v1/categories`,
+      );
+      const data = await res.json();
+
+      return data.data;
+    } catch (err) {
+      console.log(err);
       return null;
     }
   }

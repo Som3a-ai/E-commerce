@@ -19,11 +19,13 @@ export interface ProductType {
   priceAfterDiscount?: number;
 }
 
-interface CategoryType {
+export interface CategoryType {
   _id: string;
   name: string;
   slug: string;
   image: string;
+  createdAt: string;
+  updatedAt: string;
 }
 interface BrandType {
   _id: string;
