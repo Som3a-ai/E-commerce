@@ -1,3 +1,4 @@
+
 import { CategoryType, ProductType } from "../types/product.type";
 
 export async function getAllProducts(): Promise<ProductType[] | null> {
@@ -45,3 +46,6 @@ export async function getAllProducts(): Promise<ProductType[] | null> {
       return null;
     }
   }
+
+
+ 

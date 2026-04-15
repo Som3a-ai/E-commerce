@@ -33,8 +33,8 @@ export function SheetDemo() {
           <SheetTitle className={`border-b border-gray-100 p-4`}>
             <Image src={freshCartIcon} alt="logo" />
           </SheetTitle>
-          <SheetDescription>
-            <form className="p-4 border-b border-gray-100">
+        </SheetHeader>
+        <form className="p-4 border-b border-gray-100">
               <div className="relative">
                 <input
                   type="text"
@@ -49,8 +49,8 @@ export function SheetDemo() {
                 </button>
               </div>
             </form>
-          </SheetDescription>
-        </SheetHeader>
+
+            
         <nav className="p-4">
           <div className="space-y-1">
             <Link

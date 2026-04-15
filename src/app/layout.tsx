@@ -3,6 +3,7 @@ import { Geist, Geist_Mono, Exo } from "next/font/google";
 import "./globals.css";
 import Navbar from "./_components/Navbar/Navbar";
 import Footer from "./_components/Footer/Footer";
+import { Toaster } from "@/components/ui/sonner"
 
 
 const exoFallback = Exo({
@@ -28,7 +29,7 @@ export default function RootLayout({
     >
       <body className={`${exoFallback.className}`} >
         <Navbar />
-
+        <Toaster/>
         {children}
 
         <Footer />

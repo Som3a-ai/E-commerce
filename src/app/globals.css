@@ -150,3 +150,20 @@
   border-radius: 6px !important;
   width: 32px !important;
 }
+
+.btn {
+  padding-inline: calc(var(--spacing) * 4);
+  padding-block: calc(var(--spacing) * 2);
+  border-radius: var(--radius-lg);
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-gray-900);
+  cursor: pointer;
+}
+
+
+.form-control:focus{
+
+  border-color: #16a34a !important;
+  outline-style: none;
+  outline-color: none;
+}
