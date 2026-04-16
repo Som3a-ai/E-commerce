@@ -32,3 +32,21 @@ export const RegisterationSchema = zod
 
 
  export type RegisterSchemaType = zod.infer<typeof RegisterationSchema>
+
+
+
+ export const LoginSchema = zod
+  .object({
+    
+   email: zod.email("invalid email address").nonempty("email is required"),
+    password: zod
+      .string()
+      .nonempty("password is required")
+      .regex(
+        /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&]).{8,}$/,
+        "Password must be at least 8 characters and include uppercase, lowercase, number, and special character",
+      ),
+
+  })
+
+export type loginType = zod.infer<typeof LoginSchema>

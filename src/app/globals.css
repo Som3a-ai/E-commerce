@@ -156,7 +156,6 @@
   padding-block: calc(var(--spacing) * 2);
   border-radius: var(--radius-lg);
   font-weight: var(--font-weight-semibold);
-  color: var(--color-gray-900);
   cursor: pointer;
 }
 
