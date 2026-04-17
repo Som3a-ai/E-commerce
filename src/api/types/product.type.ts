@@ -1,7 +1,7 @@
 export interface ProductType {
   sold: number;
   images: string[];
-  subcategory: SubCategory[] ;
+  subcategory: SubCategory[];
   ratingsQuantity: number;
   _id: string;
   title: string;
@@ -27,16 +27,18 @@ export interface CategoryType {
   createdAt: string;
   updatedAt: string;
 }
-interface BrandType {
+export interface BrandType {
   _id: string;
   name: string;
   slug: string;
   image: string;
+  createdAt: string;
+  updatedAt: string;
 }
 
-interface SubCategory{
-  _id : string;
-  name : string;
-  slug : string;
-  category : string
+interface SubCategory {
+  _id: string;
+  name: string;
+  slug: string;
+  category: string;
 }
