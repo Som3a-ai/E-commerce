@@ -15,6 +15,7 @@ import { LoginSchema, loginType } from '@/schemas/auth.schema';
 import { Login } from '@/actions/auth.actions';
 import { toast } from 'sonner';
 import { useRouter } from 'next/navigation';
+import {signIn} from "next-auth/react"
 
 
 
@@ -35,10 +36,15 @@ const {control , handleSubmit} = useForm({
 
 async function logInSumbit(obj : loginType){
 
-    const isLogin = await Login(obj)
+
+  const response = await signIn("credentials" , {...obj , redirect : false})
+
+  console.log(response)
+
+    // const isLogin = await Login(obj)
   
   
-        if(isLogin){
+        if(response?.ok){
             toast.success("LoggedIn Successfully 👍" , {duration : 3000 , position : "top-center"})
   
             setTimeout(()=>{
@@ -48,7 +54,7 @@ async function logInSumbit(obj : loginType){
         }else{
   
   
-          toast.error("Error please try again later 😥" , {duration : 3000 , position : "top-center"})
+          toast.error(response?.error , {duration : 3000 , position : "top-center"})
         }
   
 }
