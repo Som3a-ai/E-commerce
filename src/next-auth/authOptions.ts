@@ -1,5 +1,6 @@
 import { NextAuthOptions } from "next-auth";
 import Credentials from "next-auth/providers/credentials";
+import { jwtDecode } from "jwt-decode";
 
 export const authOptions: NextAuthOptions = {
   providers: [
@@ -35,15 +36,19 @@ export const authOptions: NextAuthOptions = {
           );
 
           const result = await res.json();
-          console.log( "result of logIn", result);
+          console.log("result of logIn", result);
 
           if (!res.ok) {
             throw new Error(result.message || "Invalid credentials");
           }
+
+          const jwt: { id: string } = jwtDecode(result.token);
+
           return {
-            id: "",
+            id: jwt.id,
             name: result.user.name,
             email: result.user.email,
+            accessToken: result.token,
           };
         } catch (err) {
           console.log("error from api", err);
@@ -53,6 +58,25 @@ export const authOptions: NextAuthOptions = {
     }),
   ],
 
+  callbacks: {
+    jwt(param) {
+      if (param.user) {
+        param.token.routeToken = param.user.accessToken;
+
+        param.token.id = param.user.id;
+
+      }
+      return param.token;
+    },
+
+    session(params){
+
+      params.session.id = params.token.id;
+
+      return params.session
+    }
+
+  },
   pages: {
     signIn: "/login",
   },
