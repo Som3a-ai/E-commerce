@@ -69,11 +69,11 @@ export const authOptions: NextAuthOptions = {
       return param.token;
     },
 
-    session(params){
+    session({token , session}){
 
-      params.session.id = params.token.id;
+      session.id = token.id;
 
-      return params.session
+      return session
     }
 
   },
