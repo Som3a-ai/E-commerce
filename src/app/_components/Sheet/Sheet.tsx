@@ -23,11 +23,15 @@ import { CiHeart } from "react-icons/ci";
 import { FaShoppingCart } from "react-icons/fa";
 import { FaHeadset } from "react-icons/fa";
 
-export function SheetDemo({ authenticated, userName , signOUt }): {
+export function SheetDemo({
+  authenticated,
+  userName,
+  signOut,
+}: {
   authenticated: string;
   userName: string;
-  signOut : Function
-} {
+  signOut: () => void;
+}) {
   return (
     <Sheet>
       <SheetTrigger className="lg:hidden ml-1 cursor-pointer w-10 h-10 rounded-full bg-green-600 hover:bg-green-700 text-white flex items-center justify-center transition-colors">
@@ -136,16 +140,18 @@ export function SheetDemo({ authenticated, userName , signOUt }): {
               href="/profile"
             >
               <div className="w-9 h-9 rounded-full bg-gray-100 flex items-center justify-center">
-                  <CiUser/>
+                <CiUser />
               </div>
               <span className="font-medium text-gray-700">{userName}</span>
             </Link>
 
-            <button onClick={signOUt} className="flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-red-50 transition-colors w-full text-left cursor-pointer">
+            <button
+              onClick={signOut}
+              className="flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-red-50 transition-colors w-full text-left cursor-pointer"
+            >
               <div className="w-9 h-9 rounded-full bg-red-50 flex items-center justify-center text-red-600">
                 <PiSignOutBold />
-                
-                </div>
+              </div>
               <span className="font-medium text-red-600">Sign Out</span>
             </button>
           </>

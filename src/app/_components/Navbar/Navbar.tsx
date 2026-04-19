@@ -314,7 +314,7 @@ export default function Navbar() {
                 </>
                 
                 }
-                <SheetDemo authenticated={status} userName={mySession?.user?.name} signOUt={mySignOut} />
+                <SheetDemo authenticated={status} userName={mySession?.user?.name || ""} signOut={mySignOut} />
               </div>
             </div>
           </div>
