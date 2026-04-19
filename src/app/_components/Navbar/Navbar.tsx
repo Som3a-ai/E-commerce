@@ -27,6 +27,8 @@ import { useSession , signOut } from "next-auth/react";
 export default function Navbar() {
   const { data: mySession, status } = useSession();
 
+  console.log(mySession)
+
 
   const [isDropDown , setisDropDown] = useState<boolean>(false)
 
