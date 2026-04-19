@@ -3,6 +3,8 @@
 import { Button } from "@/components/ui/button";
 import freshCartIcon from "../../../../public/FreshCart Logo.png";
 import { FaMagnifyingGlass } from "react-icons/fa6";
+import { PiSignOutBold } from "react-icons/pi";
+import { CiUser } from "react-icons/ci";
 
 import {
   Sheet,
@@ -21,7 +23,11 @@ import { CiHeart } from "react-icons/ci";
 import { FaShoppingCart } from "react-icons/fa";
 import { FaHeadset } from "react-icons/fa";
 
-export function SheetDemo() {
+export function SheetDemo({ authenticated, userName , signOUt }): {
+  authenticated: string;
+  userName: string;
+  signOut : Function
+} {
   return (
     <Sheet>
       <SheetTrigger className="lg:hidden ml-1 cursor-pointer w-10 h-10 rounded-full bg-green-600 hover:bg-green-700 text-white flex items-center justify-center transition-colors">
@@ -35,22 +41,21 @@ export function SheetDemo() {
           </SheetTitle>
         </SheetHeader>
         <form className="p-4 border-b border-gray-100">
-              <div className="relative">
-                <input
-                  type="text"
-                  placeholder="Search products..."
-                  className="w-full px-4 py-3 pr-12 rounded-xl border border-gray-200 bg-gray-50 focus:bg-white focus:outline-none focus:ring-2 focus:ring-green-500/20 focus:border-green-500 text-sm"
-                />
-                <button
-                  type="submit"
-                  className="absolute right-2 top-1/2 -translate-y-1/2 w-8 h-8 rounded-lg bg-green-600 text-white flex items-center justify-center"
-                >
-                  <FaMagnifyingGlass className="text-white" />
-                </button>
-              </div>
-            </form>
+          <div className="relative">
+            <input
+              type="text"
+              placeholder="Search products..."
+              className="w-full px-4 py-3 pr-12 rounded-xl border border-gray-200 bg-gray-50 focus:bg-white focus:outline-none focus:ring-2 focus:ring-green-500/20 focus:border-green-500 text-sm"
+            />
+            <button
+              type="submit"
+              className="absolute right-2 top-1/2 -translate-y-1/2 w-8 h-8 rounded-lg bg-green-600 text-white flex items-center justify-center"
+            >
+              <FaMagnifyingGlass className="text-white" />
+            </button>
+          </div>
+        </form>
 
-            
         <nav className="p-4">
           <div className="space-y-1">
             <Link
@@ -105,22 +110,46 @@ export function SheetDemo() {
           </Link>
         </div>
         <div className="mx-4 border-t border-gray-100"></div>
-        <div className="p-4 space-y-1">
-          <div className="grid grid-cols-2 gap-3 pt-2">
+        {authenticated === "unauthenticated" ? (
+          <>
+            <div className="p-4 space-y-1">
+              <div className="grid grid-cols-2 gap-3 pt-2">
+                <Link
+                  className="flex items-center justify-center gap-2 px-4 py-3 rounded-xl bg-green-600 text-white font-semibold hover:bg-green-700 transition-colors"
+                  href="/login"
+                >
+                  Sign In
+                </Link>
+                <Link
+                  className="flex items-center justify-center gap-2 px-4 py-3 rounded-xl border-2 border-green-600 text-primary-600 font-semibold hover:bg-green-50 transition-colors"
+                  href="/register"
+                >
+                  Sign Up
+                </Link>
+              </div>
+            </div>
+          </>
+        ) : (
+          <>
             <Link
-              className="flex items-center justify-center gap-2 px-4 py-3 rounded-xl bg-green-600 text-white font-semibold hover:bg-green-700 transition-colors"
-              href="/login"
+              className="flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-green-50 transition-colors"
+              href="/profile"
             >
-              Sign In
+              <div className="w-9 h-9 rounded-full bg-gray-100 flex items-center justify-center">
+                  <CiUser/>
+              </div>
+              <span className="font-medium text-gray-700">{userName}</span>
             </Link>
-            <Link
-              className="flex items-center justify-center gap-2 px-4 py-3 rounded-xl border-2 border-green-600 text-primary-600 font-semibold hover:bg-green-50 transition-colors"
-              href="/register"
-            >
-              Sign Up
-            </Link>
-          </div>
-        </div>
+
+            <button onClick={signOUt} className="flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-red-50 transition-colors w-full text-left cursor-pointer">
+              <div className="w-9 h-9 rounded-full bg-red-50 flex items-center justify-center text-red-600">
+                <PiSignOutBold />
+                
+                </div>
+              <span className="font-medium text-red-600">Sign Out</span>
+            </button>
+          </>
+        )}
 
         <Link
           className="mx-4 mt-2 p-4 rounded-xl bg-gray-50 border border-gray-100 flex items-center gap-3 hover:bg-green-50 transition-colors"
