@@ -9,6 +9,7 @@ import { FiPlus } from "react-icons/fi";
 import { ProductType } from "../../../api/types/product.type";
 import RatingStars from "../RatingStars/RatingStars";
 import { getDiscountedPercentage } from "@/utils";
+import AddtoCart from "../AddtoCart/AddtoCart";
 
 export default function ProductCard({ product }: { product: ProductType }) {
   return (
@@ -80,9 +81,7 @@ export default function ProductCard({ product }: { product: ProductType }) {
               </span>
             )}
           </div>
-          <button className="h-10 w-10 rounded-full cursor-pointer flex items-center justify-center transition bg-green-600 text-white hover:bg-green-700 disabled:opacity-70">
-            <FiPlus />
-          </button>
+         <AddtoCart classes="h-10 w-10 rounded-full cursor-pointer flex items-center justify-center transition bg-green-600 text-white hover:bg-green-700 disabled:opacity-70" word={<FiPlus/>} id={product.id}/>
         </div>
       </div>
     </div>

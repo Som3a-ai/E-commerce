@@ -1,7 +1,7 @@
 import Link from 'next/link'
 import React, { ReactNode } from 'react'
 
-export default function title({bgColor , breadCrumbs , icon,heading , subHeading} : {bgColor : string , breadCrumbs : string , icon : ReactNode , heading : string , subHeading : string}) {
+export default function Title({bgColor , breadCrumbs , icon,heading , subHeading} : {bgColor : string , breadCrumbs : string , icon : ReactNode , heading : string , subHeading : string}) {
   return (
     <>
         <div className={`${bgColor} text-white`}>

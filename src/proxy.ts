@@ -3,7 +3,7 @@ import { NextRequest, NextResponse } from "next/server";
 import React from "react";
 
 export async function proxy(request: NextRequest) {
-  const protectedRoutes = ["/cart", "/wishlist", "checkout", "allorders"];
+  const protectedRoutes = ["/cart", "/wishlist", "/checkout", "/allorders"];
 
   const authRoutes = ["/login", "/register"];
 
@@ -16,6 +16,9 @@ export async function proxy(request: NextRequest) {
   });
 
   const token = myToken?.routeToken;
+
+  console.log("myToken",myToken)
+  console.log("token",token)
 
   if (!token && protectedRoutes.some((path) => mypath.startsWith(path))) {
     return NextResponse.redirect(new URL("/login", request.url));

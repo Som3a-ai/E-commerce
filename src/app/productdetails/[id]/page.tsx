@@ -9,6 +9,7 @@ import AddBtn from "@/app/_components/AddBtn/AddBtn";
 import { getSingleProduct } from "@/api/services/routemisr.service";
 import PriceIndicator from "@/app/_components/PriceIndicator/PriceIndicator";
 import { getDiscountedPercentage } from "@/utils";
+import AddtoCart from "@/app/_components/AddtoCart/AddtoCart";
 
 export default async function page(props: { params: Promise<{ id: string }> }) {
   const params = await props.params;
@@ -126,6 +127,13 @@ export default async function page(props: { params: Promise<{ id: string }> }) {
 
             {/* btn and total price below here */}
             <PriceIndicator quantity={myProduct?.quantity || 0} price={myProduct?.price || 0} discountedPrice={myProduct?.priceAfterDiscount || 0}/>
+
+            <div className="flex flex-col sm:flex-row gap-3 mb-6">
+              <AddtoCart id={id} word="Add to Cart" classes="flex-1 cursor-pointer text-white py-3.5 px-6 rounded-xl font-medium hover:bg-primary-700 active:scale-[0.98] transition-all flex items-center justify-center gap-2 shadow-lg shadow-green-600/25 bg-green-600"/>
+              <button  className="flex-1 cursor-pointer bg-gray-900 text-white py-3.5 px-6 rounded-xl font-medium hover:bg-gray-800 active:scale-[0.98] transition-all flex items-center justify-center gap-2">
+                  Buy Now
+              </button>
+            </div>
           </div>
           
           </div>
