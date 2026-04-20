@@ -8,7 +8,7 @@ import { FaDropbox } from "react-icons/fa";
 import { FaArrowRightLong } from "react-icons/fa6";
 import { FaTrashCan } from "react-icons/fa6";
 import { IoBag } from "react-icons/io5";
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import Title from "../_components/Title/Title";
 import { FaShoppingCart } from "react-icons/fa";
 import ItemCard from "../_components/ItemCard/ItemCard";
@@ -17,12 +17,15 @@ import Link from "next/link";
 import { CartDataType } from "@/api/types/cart.type";
 import Loading from "../_components/Loading/Loading";
 import { toast } from "sonner";
+import { CartContext } from "@/context/CartContext";
 
 export default function page() {
   const [cartItems, setCartItems] = useState<CartDataType | null>(null);
   const [numOfCart, setnumOfCart] = useState<number | null>(null);
   const [loading, setLoading] = useState(true);
   const[isClearBtn , setisCLearBtn] = useState<boolean>(false)
+  
+  const {setnumOfCartItems} = useContext(CartContext)
 
   async function getUserCart() {
     const res = await getLoggedUserCart();
@@ -43,6 +46,7 @@ export default function page() {
       toast.success(res.message , {position:"top-center" , duration : 2000})
       setCartItems(res.data)
       setisCLearBtn(true)
+      setnumOfCartItems(0)
     }else{
        toast.error(res?.message , {position:"top-center" , duration : 2000})
        setisCLearBtn(true)

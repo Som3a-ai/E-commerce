@@ -1,13 +1,14 @@
 "use client";
 
 import Link from "next/link";
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { MdOutlineDone } from "react-icons/md";
 import { FaTrash } from "react-icons/fa";
 import { ProductInfo } from "@/api/types/cart.type";
 import { RemoveProductFromCart, updateProductQuantity } from "@/actions/cart.actions";
 import { toast } from "sonner";
 import { FaSpinner } from "react-icons/fa";
+import { CartContext } from "@/context/CartContext";
 
 export default function ItemCard({
   product,
@@ -25,7 +26,9 @@ export default function ItemCard({
   const [currentId , setcurrentId] = useState<null | string>(null)
   const [removeDisabled , setremoveDisabled] = useState<boolean>(false)
 
-  async function updateProductCount(productId: string, newCount: number) {
+  const {numOfCartItems , setnumOfCartItems} = useContext(CartContext)
+
+  async function updateProductCount(productId: string, newCount: number , sign : string) {
     setdisableBtn(true);
     setcurrentId(product.id)
     setisLoading(true);
@@ -36,6 +39,12 @@ export default function ItemCard({
       setnewCart(res.data);
       setdisableBtn(false);
       setisLoading(false);
+      if(sign === "+"){
+        setnumOfCartItems(numOfCartItems + 1)
+      }else{
+        setnumOfCartItems(numOfCartItems - 1)
+      }
+
     } else {
       toast.error(res?.message, { position: "top-center", duration: 2000 });
       setdisableBtn(false);
@@ -54,6 +63,7 @@ export default function ItemCard({
       toast.success(res.message , {position : "top-center" , duration : 2000})
       setnewCart(res.data)
       setremoveDisabled(false)
+      setnumOfCartItems(numOfCartItems - count)
     }else{
       toast.error(res?.message , {position : "top-center" , duration : 2000})
       setremoveDisabled(false)
@@ -113,7 +123,7 @@ export default function ItemCard({
                 <div className="flex items-center bg-gray-50 rounded-xl p-1 border border-gray-200">
                   <button
                     disabled={disabelBtn}
-                    onClick={() => updateProductCount(product.id, count - 1)}
+                    onClick={() => updateProductCount(product.id, count - 1 , "-")}
                     className="h-8 w-8 rounded-lg cursor-pointer bg-white shadow-sm flex items-center justify-center text-gray-500 hover:text-gray-700 hover:bg-gray-50 disabled:opacity-40 disabled:cursor-not-allowed disabled:shadow-none transition-all"
                   >
                     -
@@ -130,7 +140,7 @@ export default function ItemCard({
                   )}
                   <button
                     disabled={disabelBtn}
-                    onClick={() => updateProductCount(product.id, count + 1)}
+                    onClick={() => updateProductCount(product.id , count + 1 , "+")}
                     className="h-8 w-8 rounded-lg cursor-pointer bg-green-600 shadow-sm shadow-green-600/30 flex items-center justify-center text-white hover:bg-green-700 disabled:opacity-40 disabled:cursor-not-allowed transition-all"
                   >
                     +

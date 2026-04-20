@@ -28,7 +28,7 @@ export async function getLoggedUserCart(): Promise<CartType | null> {
   const token = await getMyToken();
 
   if (!token) {
-    return null;
+    throw new Error("please Login first")
   }
 
   const res = await fetch(`https://ecommerce.routemisr.com/api/v2/cart`, {

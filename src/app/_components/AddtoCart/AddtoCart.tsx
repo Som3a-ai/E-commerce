@@ -1,12 +1,15 @@
 "use client"
 
 import { addtoCart } from '@/actions/cart.actions'
-import React from 'react'
+import { CartContext } from '@/context/CartContext'
+import React, { useContext } from 'react'
 import { toast } from 'sonner'
 
 
 
 export default function AddtoCart({classes , word , id} : {classes : string , word : string | React.ReactNode , id : string}) {
+
+  const {numOfCartItems , setnumOfCartItems} = useContext(CartContext)
 
   async function addProduct(){
 
@@ -17,6 +20,7 @@ export default function AddtoCart({classes , word , id} : {classes : string , wo
   if(res.status === "success"){
 
     toast.success(res.message , {duration : 2000 , position : "top-center"})
+    setnumOfCartItems(numOfCartItems + 1)
   }
   else{
     toast.error(res.message , {duration : 2000 , position : "top-center"})

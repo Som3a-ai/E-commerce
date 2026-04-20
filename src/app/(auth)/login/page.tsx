@@ -1,6 +1,6 @@
 "use client"
 
-import React from 'react'
+import React, { useContext } from 'react'
 import cartImg from "../../../assests/2e5810ff3e-e750761ebcd4ae5907db.png"
 import { FaTruck } from "react-icons/fa";
 import { FaClock } from "react-icons/fa";
@@ -16,6 +16,7 @@ import { Login } from '@/actions/auth.actions';
 import { toast } from 'sonner';
 import { useRouter } from 'next/navigation';
 import {signIn} from "next-auth/react"
+import { CartContext } from '@/context/CartContext';
 
 
 
@@ -23,6 +24,8 @@ import {signIn} from "next-auth/react"
 export default function page() {
 
   const navigate = useRouter()
+
+  const {getUserCart} = useContext(CartContext)
 
 const {control , handleSubmit} = useForm({
   defaultValues:{
@@ -46,6 +49,8 @@ async function logInSumbit(obj : loginType){
   
         if(response?.ok){
             toast.success("LoggedIn Successfully 👍" , {duration : 3000 , position : "top-center"})
+
+            getUserCart();
   
             setTimeout(()=>{
               navigate.push("/")

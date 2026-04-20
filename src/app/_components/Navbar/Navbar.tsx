@@ -19,25 +19,23 @@ import { IoIosPersonAdd } from "react-icons/io";
 import { PiSignOutBold } from "react-icons/pi";
 import { FaCog } from "react-icons/fa";
 
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import freshCartIcon from "../../../../public/FreshCart Logo.png";
 import { SheetDemo } from "./../Sheet/Sheet";
-import { useSession , signOut } from "next-auth/react";
+import { useSession, signOut } from "next-auth/react";
+import { CartContext } from "@/context/CartContext";
 
 export default function Navbar() {
   const { data: mySession, status } = useSession();
 
-  console.log(mySession)
+  const { numOfCartItems, setnumOfCartItems } = useContext(CartContext);
 
+  console.log("cart items", numOfCartItems)
 
-  const [isDropDown , setisDropDown] = useState<boolean>(false)
+  const [isDropDown, setisDropDown] = useState<boolean>(false);
 
-
-  function mySignOut(){
-
-
-
-    signOut({redirect : true , callbackUrl : "/login"})
+  function mySignOut() {
+    signOut({ redirect: true, callbackUrl: "/login" });
   }
 
   return (
@@ -137,7 +135,7 @@ export default function Navbar() {
                   />
                   <button
                     type="submit"
-                    className="absolute right-1.5 top-1/2 -translate-y-1/2 w-9 h-9 rounded-full bg-green-600 text-white flex items-center justify-center hover:bg-primary-700 transition-colors"
+                    className="absolute right-1.5 top-1/2 -translate-y-1/2 w-9 h-9 rounded-full bg-green-600 text-white flex items-center justify-center hover:bg-green-700 transition-colors"
                   >
                     <FaMagnifyingGlass />
                   </button>
@@ -165,31 +163,31 @@ export default function Navbar() {
                   <div className="absolute top-full left-0 pt-1 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200">
                     <div className="bg-white border border-gray-100 rounded-xl shadow-xl py-2 min-w-50">
                       <Link
-                        className="block px-4 py-2.5 text-gray-600 hover:text-green-600 hover:bg-primary-50 transition-colors"
+                        className="block px-4 py-2.5 text-gray-600 hover:text-green-600 hover:bg-green-50 transition-colors"
                         href="/categories"
                       >
                         All Categories
                       </Link>
                       <Link
-                        className="block px-4 py-2.5 text-gray-600 hover:text-green-600 hover:bg-primary-50 transition-colors"
+                        className="block px-4 py-2.5 text-gray-600 hover:text-green-600 hover:bg-green-50 transition-colors"
                         href="/"
                       >
                         Electronics
                       </Link>
                       <Link
-                        className="block px-4 py-2.5 text-gray-600 hover:text-green-600 hover:bg-primary-50 transition-colors"
+                        className="block px-4 py-2.5 text-gray-600 hover:text-green-600 hover:bg-green-50 transition-colors"
                         href="/"
                       >
                         Women's Fashion
                       </Link>
                       <Link
-                        className="block px-4 py-2.5 text-gray-600 hover:text-green-600 hover:bg-primary-50 transition-colors"
+                        className="block px-4 py-2.5 text-gray-600 hover:text-green-600 hover:bg-green-50 transition-colors"
                         href="/"
                       >
                         Men's Fashion
                       </Link>
                       <Link
-                        className="block px-4 py-2.5 text-gray-600 hover:text-green-600 hover:bg-primary-50 transition-colors"
+                        className="block px-4 py-2.5 text-gray-600 hover:text-green-600 hover:bg-green-50 transition-colors"
                         href="/"
                       >
                         Beauty & Health
@@ -230,93 +228,113 @@ export default function Navbar() {
                   href="/cart"
                 >
                   <FaShoppingCart className="text-xl group-hover:text-green-600 text-gray-400" />
+                  {numOfCartItems !== 0 && (
+                    <span className="absolute top-0.5 right-0.5 size-4.5 rounded-full bg-green-600 text-white text-[10px] font-bold flex items-center justify-center ring-2 ring-white">
+                      {numOfCartItems}
+                    </span>
+                  )}
                 </Link>
 
-                {status === "unauthenticated" ? 
-                
-                <>
-                <Link
-                  className="hidden lg:flex items-center gap-2 ml-2 px-5 py-2.5 rounded-full bg-green-600 hover:bg-green-700 text-white text-sm font-semibold transition-colors shadow-sm shadow-green-600/20"
-                  href="/login"
-                >
-                  <CiUser className="text-sm" />
-                  Sign In
-                </Link>
-                </> : 
-                <>
-                
-                <div className="hidden lg:block relative">
-                  <button onClick={()=>setisDropDown(!isDropDown)} className="relative cursor-pointer p-2.5 rounded-full hover:bg-gray-100 transition-colors group">
-                  <FaRegUserCircle />
+                {status === "unauthenticated" ? (
+                  <>
+                    <Link
+                      className="hidden lg:flex items-center gap-2 ml-2 px-5 py-2.5 rounded-full bg-green-600 hover:bg-green-700 text-white text-sm font-semibold transition-colors shadow-sm shadow-green-600/20"
+                      href="/login"
+                    >
+                      <CiUser className="text-sm" />
+                      Sign In
+                    </Link>
+                  </>
+                ) : (
+                  <>
+                    <div className="hidden lg:block relative">
+                      <button
+                        onClick={() => setisDropDown(!isDropDown)}
+                        className="relative cursor-pointer p-2.5 rounded-full hover:bg-gray-100 transition-colors group"
+                      >
+                        <FaRegUserCircle />
+                      </button>
 
-
-                </button>
-
-                      <div className={`absolute right-0 top-full mt-2 w-64 bg-white border border-gray-100 rounded-2xl shadow-xl transition-all duration-200 origin-top-right  scale-95 ${isDropDown ? "opacity-100" : "invisible opacity-0"}`}>
-                          <div className="p-4 border-b border-gray-100">
-                            <div className="flex items-center gap-3">
-                                <div className="w-10 h-10 rounded-full bg-primary-100 flex items-center justify-center">
-                                  
-                                         <FaRegUserCircle />
-                                  
-                                  </div>
-
-
-                                  <div className="min-w-0">
-
-                                    <p className="text-sm font-semibold text-gray-800 truncate">{mySession?.user?.name}</p>
-                                    <p className="text-xs text-gray-400 truncate">{mySession?.user?.email}</p>
-                                  </div>
-
-                                   
-                              
+                      <div
+                        className={`absolute right-0 top-full mt-2 w-64 bg-white border border-gray-100 rounded-2xl shadow-xl transition-all duration-200 origin-top-right  scale-95 ${isDropDown ? "opacity-100" : "invisible opacity-0"}`}
+                      >
+                        <div className="p-4 border-b border-gray-100">
+                          <div className="flex items-center gap-3">
+                            <div className="w-10 h-10 rounded-full bg-green-100 flex items-center justify-center">
+                              <FaRegUserCircle />
                             </div>
 
-                            <div className="py-2">
-                                  <Link className="flex items-center gap-3 px-4 py-2.5 text-sm text-gray-600 hover:text-green-600 hover:bg-green-50 transition-colors" href="/profile">
-                                  <CiUser />
-                                  My Profile
-                                  </Link>
-
-                                  <Link className="flex items-center gap-3 px-4 py-2.5 text-sm text-gray-600 hover:text-green-600 hover:bg-green-50 transition-colors" href="/orders">
-                                  <BsBoxFill />
-
-                                  My Orders
-                                  </Link>
-
-                                  <Link className="flex items-center gap-3 px-4 py-2.5 text-sm text-gray-600 hover:text-green-600 hover:bg-green-50 transition-colors" href="/wishlist">
-                                  <CiHeart/>
-                                  My Wishlist
-                                  </Link>
-
-                                  <Link className="flex items-center gap-3 px-4 py-2.5 text-sm text-gray-600 hover:text-green-600 hover:bg-green-50 transition-colors" href="/profile/addresses">
-                                  <RiContactsBook3Line />
-                                  Addresses
-                                  </Link>
-
-                                  <Link className="flex items-center gap-3 px-4 py-2.5 text-sm text-gray-600 hover:text-green-600 hover:bg-green-50 transition-colors" href="/profile/settings">
-                                  <FaCog />
-                                  Settings
-                                  </Link>
-                            </div>
-
-                            <div className="border-t border-gray-100 py-2">
-                              <button onClick={mySignOut} className="flex items-center cursor-pointer gap-3 px-4 py-2.5 text-sm text-red-500 hover:bg-red-50 transition-colors w-full text-left">
-
-                                    <PiSignOutBold />
-                                  Sign Out
-                              </button>
-
+                            <div className="min-w-0">
+                              <p className="text-sm font-semibold text-gray-800 truncate">
+                                {mySession?.user?.name}
+                              </p>
+                              <p className="text-xs text-gray-400 truncate">
+                                {mySession?.user?.email}
+                              </p>
                             </div>
                           </div>
+
+                          <div className="py-2">
+                            <Link
+                              className="flex items-center gap-3 px-4 py-2.5 text-sm text-gray-600 hover:text-green-600 hover:bg-green-50 transition-colors"
+                              href="/profile"
+                            >
+                              <CiUser />
+                              My Profile
+                            </Link>
+
+                            <Link
+                              className="flex items-center gap-3 px-4 py-2.5 text-sm text-gray-600 hover:text-green-600 hover:bg-green-50 transition-colors"
+                              href="/orders"
+                            >
+                              <BsBoxFill />
+                              My Orders
+                            </Link>
+
+                            <Link
+                              className="flex items-center gap-3 px-4 py-2.5 text-sm text-gray-600 hover:text-green-600 hover:bg-green-50 transition-colors"
+                              href="/wishlist"
+                            >
+                              <CiHeart />
+                              My Wishlist
+                            </Link>
+
+                            <Link
+                              className="flex items-center gap-3 px-4 py-2.5 text-sm text-gray-600 hover:text-green-600 hover:bg-green-50 transition-colors"
+                              href="/profile/addresses"
+                            >
+                              <RiContactsBook3Line />
+                              Addresses
+                            </Link>
+
+                            <Link
+                              className="flex items-center gap-3 px-4 py-2.5 text-sm text-gray-600 hover:text-green-600 hover:bg-green-50 transition-colors"
+                              href="/profile/settings"
+                            >
+                              <FaCog />
+                              Settings
+                            </Link>
+                          </div>
+
+                          <div className="border-t border-gray-100 py-2">
+                            <button
+                              onClick={mySignOut}
+                              className="flex items-center cursor-pointer gap-3 px-4 py-2.5 text-sm text-red-500 hover:bg-red-50 transition-colors w-full text-left"
+                            >
+                              <PiSignOutBold />
+                              Sign Out
+                            </button>
+                          </div>
+                        </div>
                       </div>
-               
-                </div>
-                
-                </>
-                
-                }
-                <SheetDemo authenticated={status} userName={mySession?.user?.name || ""} signOut={mySignOut} />
+                    </div>
+                  </>
+                )}
+                <SheetDemo
+                  authenticated={status}
+                  userName={mySession?.user?.name || ""}
+                  signOut={mySignOut}
+                />
               </div>
             </div>
           </div>
