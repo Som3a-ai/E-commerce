@@ -14,7 +14,7 @@ export async function getMyToken() : Promise<string | null>{
      const cookie = await cookies()
 
 
-    const myToken = cookie.get("__Secure-next-auth.session-token")?.value
+    const myToken = cookie.get("next-auth.session-token")?.value
 
     const decodedToken = await decode({token : myToken , secret : process.env.NEXTAUTH_SECRET!})
 

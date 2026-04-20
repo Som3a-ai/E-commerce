@@ -21,6 +21,8 @@ export default  async function brands() {
       heading="Top Brands"
       subHeading="Shop from your favorite brands"
       icon={<FaTags className="text-4xl" />}
+      iconBg="bg-white/20"
+      textColor="text-white"
     />
 
 

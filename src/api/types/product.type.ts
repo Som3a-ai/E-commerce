@@ -36,7 +36,7 @@ export interface BrandType {
   updatedAt: string;
 }
 
-interface SubCategory {
+export interface SubCategory {
   _id: string;
   name: string;
   slug: string;
