@@ -12,25 +12,41 @@ import React, { useEffect, useState } from "react";
 import Title from "../_components/Title/Title";
 import { FaShoppingCart } from "react-icons/fa";
 import ItemCard from "../_components/ItemCard/ItemCard";
-import { getLoggedUserCart } from "@/actions/cart.actions";
+import { clearCart, getLoggedUserCart } from "@/actions/cart.actions";
 import Link from "next/link";
 import { CartDataType } from "@/api/types/cart.type";
 import Loading from "../_components/Loading/Loading";
+import { toast } from "sonner";
 
 export default function page() {
   const [cartItems, setCartItems] = useState<CartDataType | null>(null);
   const [numOfCart, setnumOfCart] = useState<number | null>(null);
   const [loading, setLoading] = useState(true);
+  const[isClearBtn , setisCLearBtn] = useState<boolean>(false)
 
   async function getUserCart() {
     const res = await getLoggedUserCart();
-    console.log(res);
     if (res?.status === "success") {
       setCartItems(res.data);
       setnumOfCart(res.numOfCartItems);
     }
 
      setLoading(false);
+  }
+
+  async function removeCart(){
+
+    setisCLearBtn(true)
+    const res = await clearCart();
+
+    if(res?.status === "success"){
+      toast.success(res.message , {position:"top-center" , duration : 2000})
+      setCartItems(res.data)
+      setisCLearBtn(true)
+    }else{
+       toast.error(res?.message , {position:"top-center" , duration : 2000})
+       setisCLearBtn(true)
+    }
   }
 
   useEffect(() => {
@@ -67,6 +83,7 @@ export default function page() {
                       product={product.product}
                       price={product.price}
                       count={product.count}
+                      setnewCart={setCartItems}
                     />
                   ))}
                 </div>
@@ -80,7 +97,7 @@ export default function page() {
                     Continue Shopping
                   </Link>
 
-                  <button className="group cursor-pointer flex items-center gap-2 text-sm text-gray-400 hover:text-red-500 transition-colors disabled:opacity-50">
+                  <button disabled={isClearBtn} onClick={()=>removeCart()}  className="group cursor-pointer flex items-center gap-2 text-sm text-gray-400 hover:text-red-500 transition-colors disabled:opacity-50 disabled:cursor-not-allowed">
                     <FaTrashCan />
 
                     <span>Clear all items</span>
@@ -186,7 +203,7 @@ export default function page() {
 
       {cartItems?.products?.length === 0 && (
         <>
-          <div className="min-h-[60vh] flex items-center justify-center px-4">
+          <div className="min-h-[60vh] flex items-center justify-center px-4 py-12">
             <div className="max-w-md text-center">
               <div className="relative mb-8">
                 <div className="w-32 h-32 rounded-full bg-linear-to-br from-gray-100 to-gray-50 flex items-center justify-center mx-auto">
