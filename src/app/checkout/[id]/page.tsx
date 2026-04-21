@@ -1,6 +1,6 @@
 "use client";
 
-import Title from "../_components/Title/Title";
+import Title from "../../_components/Title/Title";
 import { IoMdHome } from "react-icons/io";
 import { FaCircleInfo } from "react-icons/fa6";
 import { FaCity } from "react-icons/fa6";
@@ -14,11 +14,18 @@ import { CiCreditCard1 } from "react-icons/ci";
 import { FaShieldAlt } from "react-icons/fa";
 import { IoBag } from "react-icons/io5";
 import { FaTruck } from "react-icons/fa";
-import CheckOutCards from "../_components/CheckOutCards/CheckOutCards";
+import CheckOutCards from "../../_components/CheckOutCards/CheckOutCards";
 import { useEffect, useState } from "react";
 import { getLoggedUserCart } from "@/actions/cart.actions";
 import { CartDataType } from "@/api/types/cart.type";
-import Loading from "../_components/Loading/Loading";
+import Loading from "../../_components/Loading/Loading";
+import { Controller, useForm } from "react-hook-form";
+import { Field, FieldError, FieldLabel } from "@/components/ui/field";
+import { Input } from "@/components/ui/input";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { CheckOutSchema, CheckOutType } from "@/schemas/checkout.schema";
+import { onlinePayment } from "@/actions/checkout.action";
+import { useParams } from "next/navigation";
 
 
 export default function page() {
@@ -26,17 +33,30 @@ export default function page() {
 
     const [userOrders , setuserOrders] = useState<null | CartDataType >(null)
     const [loading, setLoading] = useState(true);
+    const {id} : {id : string} = useParams();
 
     const [isVisa , setisVisa] = useState(false)
+
+    const {control , handleSubmit} = useForm<CheckOutType>({
+      defaultValues:{
+        details : "",
+        phone : "",
+        city : ""
+      },
+    
+      resolver : zodResolver(CheckOutSchema)
+    })
 
 
 async function getUserFullCart(){
 
     const res = await getLoggedUserCart();
+    console.log(res)
     if (res?.status === "success") {
 
         setuserOrders(res.data)
         setLoading(false)
+        
         
     }
 
@@ -52,6 +72,19 @@ async function getUserFullCart(){
 
   },[])
 
+
+   async function mySubmit(obj : CheckOutType){
+
+
+    console.log(id)
+  
+   const res = await onlinePayment(id , "" , obj)
+
+   if(res.status === "success"){
+
+    location.href = res.session.url;
+   }
+  }
 
 
 if(loading){
@@ -71,7 +104,7 @@ if(loading){
         icon={<FaReceipt className="text-4xl text-white" />}
       />
 
-      <form>
+      <form onSubmit={handleSubmit(mySubmit)}>
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
           <div className="lg:col-span-2 space-y-6">
             <div className="bg-white rounded-2xl border border-gray-100 overflow-hidden shadow-sm">
@@ -86,6 +119,8 @@ if(loading){
               </div>
               <div className="p-6 space-y-5">
                 <div className="flex items-start gap-3 p-4 bg-blue-50 rounded-xl border border-blue-100">
+
+
                   <div className="w-8 h-8 rounded-full bg-blue-100 flex items-center justify-center shrink-0">
                     <FaCircleInfo className="text-blue-600 text-sm" />
                   </div>
@@ -100,90 +135,75 @@ if(loading){
                   </div>
                 </div>
 
-                <div>
-                  <label
-                    htmlFor="city"
-                    className="block text-sm font-semibold text-gray-700 mb-2"
-                  >
-                    City
-                  </label>
-                  <div className="relative">
-                    <div className="absolute left-4 top-1/2 -translate-y-1/2 w-8 h-8 rounded-lg bg-gray-100 flex items-center justify-center">
-                      <FaCity className="text-gray-500 text-sm" />
-                    </div>
+                <Controller
+                              name="city"
+                              control={control}
+                              render={({ field, fieldState }) => (
+                                <Field data-invalid={fieldState.invalid}>
+                                  <FieldLabel htmlFor={"email"}>City</FieldLabel>
+                                  <Input
+                                    {...field}
+                                    id={"city"}
+                                    aria-invalid={fieldState.invalid}
+                                    placeholder="e.g Cairo , Alexandria , Giza"
+                                    autoComplete="off"
+                                    type="text"
+                                    className="focus-visible:ring-0 focus-visible:border-green-500"
+                                  />
+                                  {fieldState.invalid && (
+                                    <FieldError errors={[fieldState.error]} />
+                                  )}
+                                </Field>
+                              )}
+                            />
 
-                    <input
-                      id="city"
-                      className="w-full px-4 py-3.5 pl-14 border-2 rounded-xl focus:outline-none transition-all border-red-300 focus:border-red-500 focus:ring-2 focus:ring-red-100"
-                      placeholder="e.g. Cairo, Alexandria, Giza"
-                      type="text"
-                      name="city"
-                    />
-                  </div>
+                 <Controller
+                              name="details"
+                              control={control}
+                              render={({ field, fieldState }) => (
+                                <Field data-invalid={fieldState.invalid}>
+                                  <FieldLabel htmlFor={"password"}>Street Address</FieldLabel>
+                                  <Input
+                                    {...field}
+                                    id={"details"}
+                                    aria-invalid={fieldState.invalid}
+                                    placeholder="Street name , building number , floor, apartment..."
+                                    autoComplete="off"
+                                    type="text"
+                                    className="focus-visible:ring-0 focus-visible:border-green-500"
+                                  />
+                                  {fieldState.invalid && (
+                                    <FieldError errors={[fieldState.error]} />
+                                  )}
+                                </Field>
+                              )}
+                            />
 
-                  <p className="text-sm text-red-600 mt-2 flex items-center gap-1">
-                    <span className="inline-block w-1 h-1 rounded-full bg-red-500"></span>
-                    City name must be at least 2 characters
-                  </p>
-                </div>
 
-                <div>
-                  <label
-                    htmlFor="details"
-                    className="block text-sm font-semibold text-gray-700 mb-2"
-                  >
-                    Street Address
-                  </label>
+                    <Controller
+                              name="phone"
+                              control={control}
+                              render={({ field, fieldState }) => (
+                                <Field data-invalid={fieldState.invalid}>
+                                  <FieldLabel htmlFor={"phone"}>Phone number</FieldLabel>
+                                  <Input
+                                    {...field}
+                                    id={"phone"}
+                                    aria-invalid={fieldState.invalid}
+                                    placeholder="01xxxxxxxxx"
+                                    autoComplete="off"
+                                    type="tel"
+                                    className="focus-visible:ring-0 focus-visible:border-green-500"
+                                  />
+                                  {fieldState.invalid && (
+                                    <FieldError errors={[fieldState.error]} />
+                                  )}
+                                </Field>
+                              )}
+                            />           
+              
 
-                  <div className="relative">
-                    <div className="absolute left-4 top-4 w-8 h-8 rounded-lg bg-gray-100 flex items-center justify-center">
-                      <FaLocationDot />
-                    </div>
 
-                    <textarea
-                      id="details"
-                      rows={3}
-                      className="w-full px-4 py-3.5 pl-14 border-2 rounded-xl focus:outline-none transition-all resize-none border-red-300 focus:border-red-500 focus:ring-2 focus:ring-red-100"
-                      placeholder="Street name, building number, floor, apartment..."
-                      name="details"
-                    />
-                  </div>
-
-                  <p className="text-sm text-red-600 mt-2 flex items-center gap-1">
-                    <span className="inline-block w-1 h-1 rounded-full bg-red-500"></span>
-                    Address details must be at least 10 characters
-                  </p>
-                </div>
-
-                <div>
-                  <label
-                    htmlFor="phone"
-                    className="block text-sm font-semibold text-gray-700 mb-2"
-                  >
-                    Phone Number <span className="text-red-500">*</span>
-                  </label>
-                  <div className="relative">
-                    <div className="absolute left-4 top-1/2 -translate-y-1/2 w-8 h-8 rounded-lg bg-gray-100 flex items-center justify-center">
-                      <FaPhone className="text-sm text-gray-500" />
-                    </div>
-
-                    <input
-                      id="phone"
-                      className="w-full px-4 py-3.5 pl-14 border-2 rounded-xl focus:outline-none transition-all border-red-300 focus:border-red-500 focus:ring-2 focus:ring-red-100"
-                      placeholder="01xxxxxxxxx"
-                      type="tel"
-                      name="phone"
-                    />
-                    <span className="absolute right-4 top-1/2 -translate-y-1/2 text-xs text-gray-400">
-                      Egyptian numbers only
-                    </span>
-                  </div>
-
-                  <p className="text-sm text-red-600 mt-2 flex items-center gap-1">
-                    <span className="inline-block w-1 h-1 rounded-full bg-red-500"></span>
-                    Please enter a valid Egyptian phone number
-                  </p>
-                </div>
               </div>
             </div>
 

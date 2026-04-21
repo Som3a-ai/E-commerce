@@ -24,6 +24,7 @@ export default function page() {
   const [numOfCart, setnumOfCart] = useState<number | null>(null);
   const [loading, setLoading] = useState(true);
   const[isClearBtn , setisCLearBtn] = useState<boolean>(false)
+  const [cartId , setcartId] = useState<string>("")
   
   const {setnumOfCartItems} = useContext(CartContext)
 
@@ -32,6 +33,8 @@ export default function page() {
     if (res?.status === "success") {
       setCartItems(res.data);
       setnumOfCart(res.numOfCartItems);
+      setcartId(res.cartId)
+      
     }
 
      setLoading(false);
@@ -173,7 +176,7 @@ export default function page() {
 
                     <Link
                       className="w-full bg-gradient-to-r from-green-600 to-green-700 text-white py-4 px-6 rounded-xl font-semibold hover:from-green-700 hover:to-green-800 transition-all flex items-center justify-center gap-3 shadow-lg shadow-green-600/20 active:scale-[0.98]"
-                      href="/checkout"
+                      href={`/checkout/${cartId}`}
                     >
                       <FaLock />
                       <span>Secure Checkout</span>
