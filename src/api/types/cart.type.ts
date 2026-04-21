@@ -22,7 +22,7 @@ export interface CartDataType{
 }
 
 
-interface CartProduct{
+export interface CartProduct{
 
     count : number;
     price : number;

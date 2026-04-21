@@ -10,6 +10,8 @@ export default function CartContextProvider({ children } : {children : React.Rea
 
   const [numOfCartItems, setnumOfCartItems] = useState(0);
 
+  
+
   async function getUserCart() {
     try {
       const res = await getLoggedUserCart();

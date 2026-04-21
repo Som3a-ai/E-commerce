@@ -1,4 +1,4 @@
-import Image from "next/image";
+
 import FeaturedProducts from "./_components/FeaturedProducts/FeaturedProducts";
 import HomeSlider from "./_components/HomeSlider/HomeSlider";
 // @ts-ignore
@@ -7,7 +7,7 @@ import "swiper/css";
 import "swiper/css/navigation";
 // @ts-ignore
 import "swiper/css/pagination";
-import HomeCategories from "./_components/HomeCategories/HomeCategories";
+
 
 import { lazy, Suspense } from "react";
 import { ThreeDots } from "react-loader-spinner";
