@@ -4,31 +4,35 @@ import { CartType } from "@/api/types/cart.type";
 import { getMyToken } from "@/utils";
 
 export async function addtoCart(productId: string) {
-  const token = await getMyToken();
+  try {
+    const token = await getMyToken();
 
-  if (!token) {
-    throw new Error("please login First");
+    if (!token) {
+      throw new Error("please login First to be able to add to your cart");
+    }
+
+    const res = await fetch(`https://ecommerce.routemisr.com/api/v2/cart`, {
+      method: "POST",
+      headers: {
+        token: token as string,
+        "content-type": "application/json",
+      },
+      body: JSON.stringify({ productId: productId }),
+    });
+
+    const data = await res.json();
+
+    return data;
+  } catch (err) {
+    return err;
   }
-
-  const res = await fetch(`https://ecommerce.routemisr.com/api/v2/cart`, {
-    method: "POST",
-    headers: {
-      token: token as string,
-      "content-type": "application/json",
-    },
-    body: JSON.stringify({ productId: productId }),
-  });
-
-  const data = await res.json();
-
-  return data;
 }
 
-export async function getLoggedUserCart(): Promise<CartType | null> {
+export async function getLoggedUserCart(): Promise<CartType> {
   const token = await getMyToken();
 
   if (!token) {
-    throw new Error("please Login first")
+    throw new Error("please Login first");
   }
 
   const res = await fetch(`https://ecommerce.routemisr.com/api/v2/cart`, {
@@ -101,16 +105,13 @@ export async function clearCart(): Promise<CartType | null> {
     return null;
   }
 
-  const res = await fetch(
-    `https://ecommerce.routemisr.com/api/v2/cart`,
-    {
-      method: "DELETE",
-      headers: {
-        token: token as string,
-        "content-type": "application/json",
-      },
+  const res = await fetch(`https://ecommerce.routemisr.com/api/v2/cart`, {
+    method: "DELETE",
+    headers: {
+      token: token as string,
+      "content-type": "application/json",
     },
-  );
+  });
 
   const data = await res.json();
 

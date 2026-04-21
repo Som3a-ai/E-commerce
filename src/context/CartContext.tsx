@@ -3,9 +3,9 @@
 import { getLoggedUserCart } from "@/actions/cart.actions";
 import { createContext, useEffect, useState } from "react";
 
-export const CartContext = createContext();
+export const CartContext = createContext({numOfCartItems : 0 , setnumOfCartItems(num : number){} , getUserCart(){} });
 
-export default function CartContextProvider({ children }) {
+export default function CartContextProvider({ children } : {children : React.ReactNode}) {
 
 
   const [numOfCartItems, setnumOfCartItems] = useState(0);
@@ -20,8 +20,10 @@ export default function CartContextProvider({ children }) {
         sum += product.count;
       });
       setnumOfCartItems(sum);
-    } catch (err) {
-      console.log("error", err);
+    } catch (err : unknown) {
+      if(err instanceof Error){
+        console.log(err.message)
+      }
     }
   }
 

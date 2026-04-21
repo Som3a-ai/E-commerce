@@ -14,7 +14,7 @@ export interface CartDataType{
 
     cartOwner : string;
     createdAt : string;
-    products ?: CartProduct[] ;
+    products: CartProduct[] ;
     totalCartPrice : number;
     updatedAt : string;
     _v :number;
