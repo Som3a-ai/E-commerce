@@ -32,6 +32,9 @@ export default function RootLayout({
       lang="en"
       
     >
+      <head>
+        <title>FreshCart</title>
+      </head>
       <body className={`${exoFallback.className}`} >
         <MyProvider>
       <CartContextProvider>
