@@ -5,7 +5,7 @@ import { getMyToken } from "@/utils"
 
 
 
-export async function onlinePayment(cartId : string , url : string = process.env.NEXTAUTH_URL! , formValues : CheckOutType){
+export async function onlinePayment(cartId : string , formValues : CheckOutType){
 
     const token = await getMyToken()
 
@@ -13,7 +13,7 @@ export async function onlinePayment(cartId : string , url : string = process.env
         throw new Error("login first")
     }
 
-    const res = await fetch(`https://ecommerce.routemisr.com/api/v1/orders/checkout-session/${cartId}?url=${url}` , {
+    const res = await fetch(`https://ecommerce.routemisr.com/api/v1/orders/checkout-session/${cartId}?url=${process.env.NEXTAUTH_URL!}` , {
         method : "POST",
         headers : {
             token : token ,
@@ -26,5 +26,7 @@ export async function onlinePayment(cartId : string , url : string = process.env
 
 
     const data = await res.json();
+
+    console.log("payment res",data)
     return data
 }

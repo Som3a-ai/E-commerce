@@ -76,9 +76,9 @@ async function getUserFullCart(){
    async function mySubmit(obj : CheckOutType){
 
 
-    console.log(id)
+
   
-   const res = await onlinePayment(id , "" , obj)
+   const res = await onlinePayment(id , obj)
 
    if(res.status === "success"){
 
