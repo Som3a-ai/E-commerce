@@ -59,7 +59,5 @@ export const config = {
     "/wishlist",
     "/checkout",
     "/allorders",
-    "/login",
-    "/register",
   ],
 };
