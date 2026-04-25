@@ -55,3 +55,5 @@ export async function getAllBrands(): Promise<BrandType[] | null> {
     return null;
   }
 }
+
+

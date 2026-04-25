@@ -1,4 +1,4 @@
-import Image from "next/image";
+
 import Link from "next/link";
 import React from "react";
 import { CiHeart } from "react-icons/ci";
@@ -8,10 +8,23 @@ import { FaStar } from "react-icons/fa6";
 import { FiPlus } from "react-icons/fi";
 import { ProductType } from "../../../api/types/product.type";
 import RatingStars from "../RatingStars/RatingStars";
-import { getDiscountedPercentage } from "@/utils";
+import { getDiscountedPercentage} from "@/utils";
 import AddtoCart from "../AddtoCart/AddtoCart";
+import { addToWishList } from "@/actions/wishlist.actions";
+import AddtoWishList from "../AddtoWishList/AddtoWishList";
 
 export default function ProductCard({ product }: { product: ProductType }) {
+
+
+
+
+
+
+
+
+
+
+
   return (
     <div className=" product-card  bg-white border border-gray-200 rounded-lg overflow-hidden box-shadow:rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px">
       <div className="relative">
@@ -21,9 +34,10 @@ export default function ProductCard({ product }: { product: ProductType }) {
           src={product.imageCover}
         />
         <div className="absolute top-3 right-3 flex flex-col space-y-2">
-          <button className="bg-white h-8 w-8  cursor-pointer  rounded-full flex items-center justify-center transition shadow-sm text-gray-600 hover:text-red-500">
-            <CiHeart />
-          </button>
+          {/* wishlist btn here */}
+
+        <AddtoWishList id={product.id}/>
+
           <button className="bg-white h-8 w-8 cursor-pointer rounded-full flex items-center justify-center transition shadow-sm text-gray-600 hover:text-green-500">
             <TfiReload />
           </button>
