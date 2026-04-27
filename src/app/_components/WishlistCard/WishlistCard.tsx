@@ -1,11 +1,12 @@
 import Link from "next/link";
 import { FaCheck } from "react-icons/fa";
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import AddtoCart from "../AddtoCart/AddtoCart";
 import { FaTrashAlt } from "react-icons/fa";
 import { WishListItem } from "@/api/types/wishlist.type";
 import { removeItem } from "@/actions/wishlist.actions";
 import { toast } from "sonner";
+import { CartContext } from "@/context/CartContext";
 
 export default function WishlistCard({
   item,
@@ -18,6 +19,8 @@ export default function WishlistCard({
   const [isAdded, setisAdded] = useState<boolean>(false);
   const [addedItems, setaddedItems] = useState<string[]>([]);
 
+  const {numOfWishlistItems , setnumOfWishlistItems} = useContext(CartContext)
+
   async function deleteWishlistItem(id: string) {
     const res = await removeItem(id);
 
@@ -27,6 +30,7 @@ export default function WishlistCard({
       toast.success(res.message, { duration: 2000, position: "top-center" });
       deleteItem(id);
       setisdisabled(false);
+      setnumOfWishlistItems(numOfWishlistItems - 1);
     } else {
       toast.error(res?.message, { duration: 2000, position: "top-center" });
       setisdisabled(false);

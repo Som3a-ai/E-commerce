@@ -25,7 +25,7 @@ export default function page() {
 
   const navigate = useRouter()
 
-  const {getUserCart} = useContext(CartContext)
+  const {getUserCart , getUserWishlist} = useContext(CartContext)
 
 const {control , handleSubmit} = useForm({
   defaultValues:{
@@ -51,6 +51,7 @@ async function logInSumbit(obj : loginType){
             toast.success("LoggedIn Successfully 👍" , {duration : 3000 , position : "top-center"})
 
             getUserCart();
+            getUserWishlist();
   
             setTimeout(()=>{
               navigate.push("/")

@@ -28,7 +28,7 @@ import { CartContext } from "@/context/CartContext";
 export default function Navbar() {
   const { data: mySession, status } = useSession();
 
-  const { numOfCartItems, setnumOfCartItems } = useContext(CartContext);
+  const { numOfCartItems, numOfWishlistItems } = useContext(CartContext);
 
   console.log("cart items", numOfCartItems)
 
@@ -221,6 +221,15 @@ export default function Navbar() {
                   href="/wishlist"
                 >
                   <CiHeart className="text-2xl group-hover:text-green-500" />
+
+
+                    {numOfWishlistItems > 0 && (
+                    <span className="absolute top-0.5 right-0.5 size-4.5 rounded-full bg-red-600 text-white text-[10px] font-bold flex items-center justify-center ring-2 ring-white">
+                      {numOfWishlistItems}
+                    </span>
+                  )}
+
+
                 </Link>
 
                 <Link
@@ -228,7 +237,7 @@ export default function Navbar() {
                   href="/cart"
                 >
                   <FaShoppingCart className="text-xl group-hover:text-green-600 text-gray-400" />
-                  {numOfCartItems !== 0 && (
+                  {numOfCartItems > 0 && (
                     <span className="absolute top-0.5 right-0.5 size-4.5 rounded-full bg-green-600 text-white text-[10px] font-bold flex items-center justify-center ring-2 ring-white">
                       {numOfCartItems}
                     </span>
