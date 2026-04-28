@@ -56,4 +56,22 @@ export async function getAllBrands(): Promise<BrandType[] | null> {
   }
 }
 
+export async function getSpecificBrand(brandId : string) : Promise<ProductType[] | null>{
 
+
+
+    try{
+        const res = await fetch(`https://ecommerce.routemisr.com/api/v1/products?brand=${brandId}` , {
+            method : "GET",
+
+        })
+
+        const data = await res.json();
+        console.log("brand data",data)
+        return data.data;
+
+    }catch(err){
+        console.log(err)
+        return null;
+    }
+}

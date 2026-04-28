@@ -6,7 +6,7 @@ import { FaArrowRightLong } from "react-icons/fa6";
 export default function Card({image , imageInfo , name , hoverStyle , view , id} : {image : string , imageInfo : string , name : string , hoverStyle : string , view : string , id : string}) {
   return (
     <>
-    <Link className="group bg-white rounded-2xl border border-gray-100 p-4 sm:p-5 shadow-sm hover:shadow-xl hover:border-violet-200 transition-all duration-300 hover:-translate-y-1" href={`/products/brands/${id}`}>
+    <Link className="group bg-white rounded-2xl border border-gray-100 p-4 sm:p-5 shadow-sm hover:shadow-xl hover:border-violet-200 transition-all duration-300 hover:-translate-y-1" href={`/products/${id}`}>
     
     <div className="aspect-square rounded-xl overflow-hidden bg-gray-50 mb-3 p-4 flex items-center justify-center">
 
