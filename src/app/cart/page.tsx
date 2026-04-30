@@ -74,7 +74,7 @@ export default function page() {
             <Title
               iconBg="bg-linear-to-r from-green-600 to-green-700"
               textColor="text-black"
-              subHeading={`You have 1 item in your cart`}
+              subHeading={`You have ${cart} item in your cart`}
               bgColor="#ffff"
               breadCrumbs="Shopping Cart"
               heading="Shopping Cart"

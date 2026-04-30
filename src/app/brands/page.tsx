@@ -30,7 +30,7 @@ export default  async function brands() {
       <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4 sm:gap-5">
 
         {allBrands?.map((brand)=>(
-          <Card hoverStyle="text-violet-600" key={brand.slug} image={brand.image} imageInfo={brand.slug} name={brand.name} view={"Products"} id={brand._id}/>
+          <Card hoverStyle="text-violet-600" key={brand.slug} image={brand.image} imageInfo={brand.slug} name={brand.name} view={"Products"} id={`/products/${brand._id}`}/>
         ))}
                       
       </div>

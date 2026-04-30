@@ -75,3 +75,39 @@ export async function getSpecificBrand(brandId : string) : Promise<ProductType[]
         return null;
     }
 }
+
+
+export async function getAllSubCategories(categoryId : string) : Promise<CategoryType[] | null>{
+
+ try{
+        const res = await fetch(`https://ecommerce.routemisr.com/api/v1/categories/${categoryId}/subcategories`)
+
+        const data = await res.json();
+        return data.data;
+
+    }catch(err){
+        console.log(err)
+        return null;
+    }
+
+
+}
+
+
+export async function getSpecificProducts(subCategoryId : string) : Promise<ProductType[] | null>{
+
+  try {
+    const res = await fetch(
+      `https://ecommerce.routemisr.com/api/v1/products?subcategory=${subCategoryId}`,
+    );
+    const data = await res.json();
+
+    return data.data;
+  } catch (err) {
+    console.log(err);
+    return null;
+  }
+
+
+
+}
